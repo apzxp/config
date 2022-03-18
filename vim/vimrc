@@ -39,6 +39,8 @@ vnoremap c "*c
 
 syntax on
 
+colors zellner
+
 set guifont=Menlo:h11
 
 let theme = system('defaults read -g AppleInterfaceStyle')
