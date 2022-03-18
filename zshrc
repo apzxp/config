@@ -44,6 +44,12 @@ if [[ $platform == 'macos' ]]; then
    flushDNScache (){
        sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
     }
+    resetLaunchpad (){
+        defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+    }
+    resetDock (){
+        defaults delete com.apple.dock; killall Dock
+    }
 
 elif [[ $platform == 'linux' ]]; then
 
