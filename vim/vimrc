@@ -1,5 +1,26 @@
-""General
-""----------------------------------------------
+"----------------------------------------------------------------------------
+"Plugins
+
+if empty(glob('~/.vim/autoload/plug.vim'))
+  silent !curl -fLo ~/.vim/autoload/plug.vim --create-dirs
+    \ https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+endif
+
+" Run PlugInstall if there are missing plugins
+autocmd VimEnter * if len(filter(values(g:plugs), '!isdirectory(v:val.dir)'))
+  \| PlugInstall --sync | source $MYVIMRC
+\| endif
+
+"----------------------------------------------------------------------------
+
+call plug#begin()
+
+Plug 'kkga/vim-envy'
+
+call plug#end()
+
+"----------------------------------------------------------------------------
+"General
 
 set encoding=utf-8
 
@@ -18,14 +39,15 @@ set autoindent smarttab smartindent
 set tabstop=4 shiftwidth=4 expandtab
 
 set incsearch hlsearch ignorecase smartcase
-"" Incremental search, Highlight all matches, Ignore case when searching, Automatically switch to case-sensitive when query contains an uppercase letter
+"Incremental search, Highlight all matches, Ignore case when searching,
+"Automatically switch to case-sensitive when query contains an uppercase letter
 
 set autochdir   " Change working directory to current files'
 
 set wildmenu wildmode=longest,full
 
-""Mappings
-""----------------------------------------------
+"----------------------------------------------------------------------------
+"Mappings
 
 map <C-e> :Vexplore<CR>
 imap <C-e> <C-O>:Vexplore<CR>
@@ -34,22 +56,14 @@ vnoremap y "*y
 vnoremap d "*d
 vnoremap c "*c
 
-""Styling
-""----------------------------------------------
+"----------------------------------------------------------------------------
+"Styling
 
 syntax on
 
-colors zellner
+colors envy
 
 set guifont=Menlo:h11
-
-let theme = system('defaults read -g AppleInterfaceStyle')
-if theme =~ 'Dark'
-    set bg=dark
-else
-    set bg=light
-    set t_Co=0
-endif
 
 set guioptions-=L
 set guioptions-=r
@@ -58,12 +72,10 @@ set linebreak
 
 set showcmd
 
-set list listchars=eol:↵
-
 set display+=lastline
 
-""Explorer (Vexplore) Style
-""----------------------------------------------
+"----------------------------------------------------------------------------
+"Explorer (Vexplore) Style
 
 let g:netrw_banner = 0
 let g:netrw_liststyle = 2
@@ -71,8 +83,8 @@ let g:netrw_browse_split = 4
 let g:netrw_altv = 1
 let g:netrw_winsize = 25
 
-""UndoDir
-""----------------------------------------------
+"----------------------------------------------------------------------------
+"UndoDir
 
 if !isdirectory($HOME."/.vim")
     call mkdir($HOME."/.vim", "", 0770)
@@ -82,3 +94,5 @@ if !isdirectory($HOME."/.vim/undo-dir")
 endif
 set undodir=~/.vim/undo-dir
 set undofile
+
+"----------------------------------------------------------------------------

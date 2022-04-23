@@ -1,59 +1,27 @@
 PS1="%F{001}%n%f in %d > "
 
-platform='unknown'
-if [[ "$OSTYPE" == "linux-gnu"* ]]; then
-        platform='linux'
-elif [[ "$OSTYPE" == "darwin"* ]]; then
-        platform='macos'
-elif [[ "$OSTYPE" == "cygwin" ]]; then
-        platform='cygwin'
-elif [[ "$OSTYPE" == "freebsd"* ]]; then
-        platform='freebsd'
-else
-        echo "No OS Name detected"
-fi
+#------------------------------------------------------------------------
+# Aliases
 
-#|-----------------------------|
-#|           ALIASES           |
-#|-----------------------------|
-if [[ $platform == 'macos' ]]; then
-
-    alias ls="ls -FAG"
-
-    alias brewrm="brew uninstall --zap"
-
-    alias unquarantine="sudo xattr -dr com.apple.quarantine"
-
-    alias emacs="open -a Emacs.app"
-
-elif [[ $platform == 'linux' ]]; then
-
-   alias ls='ls -G'
-
-fi
+alias ls="ls -FAG"
+alias brewrm="brew uninstall --zap"
+alias unquarantine="sudo xattr -dr com.apple.quarantine"
 
 alias youtube-dl-vid="youtube-dl -o '%(title)s.%(ext)s'"
 alias youtube-dl-pl="youtube-dl -o '%(playlist_index)s-%(title)s.%(ext)s'"
 
-#|-----------------------------|
-#|           SCRIPTS           |
-#|-----------------------------|
+#------------------------------------------------------------------------
+# Scripts
 
-
-if [[ $platform == 'macos' ]]; then
-   flushDNScache (){
-       sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
-    }
-    resetLaunchpad (){
-        defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
-    }
-    resetDock (){
-        defaults delete com.apple.dock; killall Dock
-    }
-
-elif [[ $platform == 'linux' ]]; then
-
-fi
+flushDNScache (){
+    sudo dscacheutil -flushcache; sudo killall -HUP mDNSResponder
+}
+resetLaunchpad (){
+    defaults write com.apple.dock ResetLaunchPad -bool true; killall Dock
+}
+resetDock (){
+    defaults delete com.apple.dock; killall Dock
+}
 
 mkcd () {
     mkdir "$1"
