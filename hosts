@@ -5,8 +5,8 @@ fe80::1%lo0 localhost
 
 # 0.0.0.0 youtube.com
 # 0.0.0.0 www.youtube.com
-0.0.0.0 www.twitch.tv
-0.0.0.0 twitch.tv
+# 0.0.0.0 www.twitch.tv
+# 0.0.0.0 twitch.tv
 # 0.0.0.0 vk.com
 # 0.0.0.0 www.vk.com
 # 0.0.0.0 instagram.com
@@ -30,8 +30,21 @@ fe80::1%lo0 localhost
 # 0.0.0.0 inv.cthd.icu
 
 # Block MacOS updates
-# 0.0.0.0 swdist.apple.com.edgekey.net
-# 0.0.0.0 swdist.apple.com.akadns.net
+127.0.0.0 swscan.apple.com
+127.0.0.0 gdmf.apple.com
+127.0.0.0 gdmf.v.aaplimg.com
+127.0.0.0 swscan-cdn.apple.com.akadns.net
+127.0.0.0 ocsp2.apple.com
+127.0.0.0 ocsp2-lb.apple.com.akadns.net
+127.0.0.0 xp.apple.com.edgekey.net
+127.0.0.0 configuration.apple.com.akadns.net
+127.0.0.0 swdist.apple.com.akadns.net
+
+# Block all Apple services
+127.0.0.0 apple.com
+127.0.0.0 akadns.net
+127.0.0.0 edgekey.net
+127.0.0.0 aaplimg.com
 
 # Block Apple OCSP
 127.0.0.1 ocsp.apple.com

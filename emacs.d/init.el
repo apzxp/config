@@ -3,17 +3,16 @@
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
- '(ansi-color-faces-vector
-   [default default default italic underline success warning error])
- '(ansi-color-names-vector
-   ["#242424" "#e5786d" "#95e454" "#cae682" "#8ac6f2" "#333366" "#ccaa8f" "#f6f3e8"])
- '(custom-enabled-themes '(tsdh-light)))
+ '(custom-safe-themes
+   '("bc02fd532a4853aba217ddb88b4966c39b331566ea0212aa8b2dfd0e3bbd73ed" default)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  )
+
+
 (setq user-full-name "John Doe"
       user-mail-address "john@doe.com")
 
@@ -50,23 +49,19 @@
 
 (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
 
-(add-to-list 'load-path "~/.emacs.d/packages/evil")
-(add-to-list 'load-path "~/.emacs.d/packages/xah-fly-keys")
-(require 'evil)
-(require 'xah-fly-keys)
-(xah-fly-keys-set-layout "qwerty")
-(xah-fly-keys 1)
-;; (evil-mode t)
-
 ;; Define global goto-address-mode (make links in buffers clickable)
 (define-globalized-minor-mode global-goto-address-mode goto-address-mode
   (lambda () (goto-address-mode 1)))
 ;; Turn on globalized minor mode
 (global-goto-address-mode 1)
 
+
 (setq inhibit-splash-screen t)
 (tool-bar-mode -1)
 (scroll-bar-mode -1)
+
+(blink-cursor-mode 0)
+(setq mode-line-compact t)
 
 (setq-default indent-tabs-mode nil)
 
@@ -76,21 +71,14 @@
 (defalias 'yes-or-no-p 'y-or-n-p) ;; use y/n instead of yes/no
 
 (setq-default cursor-type 'bar) ;; use bar instead of block cursor
-(global-display-line-numbers-mode t)
+
+;; (global-display-line-numbers-mode t)
+(add-hook 'prog-mode-hook #'display-line-numbers-mode)
+
 (setq-default word-wrap t)
-(electric-pair-mode 1)
+(electric-pair-mode t)
 (show-paren-mode t) ;; show matching parenthesis and brackets
 (global-hl-line-mode t) ;; highlight current line
-
-;; (cua-mode t) ;; use C-x, C-c, C-v to cut, copy and paste (respectively)
-
-;; Make cua-mode work with evil-mode
-;; (define-key evil-insert-state-map (kbd "C-c") 'cua-copy-region)
-;; (define-key evil-insert-state-map (kbd "C-v") 'cua-paste)
-;; (define-key evil-insert-state-map (kbd "C-x") 'cua-cut-region)
-;; Similar to vims'  undo/redo keybindings
-;; (define-key evil-insert-state-map (kbd "C-z") 'undo-tree-undo)
-;; (define-key evil-insert-state-map (kbd "C-y") 'undo-tree-redo)
 
 ;; Fonts
 (cond
@@ -119,13 +107,10 @@
       (caar alternative-input-methods))
 
 (defun toggle-alternative-input-method (method &optional arg interactive)
-  (if arg
-      (toggle-input-method arg interactive)
+  (if arg (toggle-input-method arg interactive)
     (let ((previous-input-method current-input-method))
-      (when current-input-method
-        (deactivate-input-method))
-      (unless (and previous-input-method
-                   (string= previous-input-method method))
+      (when current-input-method (deactivate-input-method))
+      (unless (and previous-input-method (string= previous-input-method method))
         (activate-input-method method)))))
 
 (defun reload-alternative-input-methods ()
@@ -140,10 +125,50 @@
 
 (reload-alternative-input-methods)
 
+(setenv "PATH" (concat "/usr/local/bin" path-separator (getenv "PATH")))
+
 ;; use variable-width font for some modes
-;; (progn
-;;   (defun use-variable-width-font ()
-;;     "Set current buffer to use variable-width font."
-;;     (variable-pitch-mode 1))
-;;   (add-hook 'emacs-lisp-mode-hook 'use-variable-width-font)
-;;   (add-hook 'text-mode-hook 'use-variable-width-font))
+(progn
+  (defun use-variable-width-font ()
+    "Set current buffer to use variable-width font."
+    (variable-pitch-mode 1))
+  (add-hook 'emacs-lisp-mode-hook 'use-variable-width-font)
+  (add-hook 'text-mode-hook 'use-variable-width-font)) 
+
+(defvar bootstrap-version)
+(let ((bootstrap-file
+       (expand-file-name "straight/repos/straight.el/bootstrap.el" user-emacs-directory))
+      (bootstrap-version 5))
+  (unless (file-exists-p bootstrap-file)
+    (with-current-buffer
+        (url-retrieve-synchronously
+         "https://raw.githubusercontent.com/raxod502/straight.el/develop/install.el"
+         'silent 'inhibit-cookies)
+      (goto-char (point-max))
+      (eval-print-last-sexp)))
+  (load bootstrap-file nil 'nomessage))
+
+(straight-use-package 'which-key)
+(straight-use-package 'selectrum)
+(straight-use-package 'xah-fly-keys)
+
+(which-key-mode t)
+(selectrum-mode t)
+
+;; (package-initialize)
+
+;; (unless (package-installed-p 'use-package)
+;;   (package-refresh-contents)
+;;   (package-install 'use-package))
+;; (eval-and-compile
+;;   (setq use-package-always-ensure t
+;;         use-package-expand-minimally t))
+
+;; (use-package which-key
+;;   :ensure t
+;;   :config (which-key-mode t))
+;; (use-package selectrum
+;;   :ensure t
+;;   :config (selectrum-mode t))
+;; (use-package xah-fly-keys
+;;   :ensure t)
