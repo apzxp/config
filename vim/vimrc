@@ -61,7 +61,7 @@ vnoremap c "*c
 
 syntax on
 
-colors envy
+colors TrippingRobot
 
 set guifont=Menlo:h11
 
