@@ -1,0 +1,25 @@
+PS1="%F{001}%n%f in %d > "
+
+alias ls="ls -FAG --color"
+# Lines configured by zsh-newuser-install
+HISTFILE=~/.histfile
+HISTSIZE=1000
+SAVEHIST=1000
+setopt autocd extendedglob
+unsetopt beep
+bindkey -e
+# End of lines configured by zsh-newuser-install
+# The following lines were added by compinstall
+zstyle :compinstall filename '/home/apzxp/.zshrc'
+
+autoload -Uz compinit
+compinit
+# End of lines added by compinstall
+mkcd () {
+    mkdir "$1"
+    cd "$1"
+}
+
+scanpdf () {
+    convert -density 150 "$1" -rotate 0.33 -quality 100 +noise Gaussian -colorspace Gray scanned-"$1"
+}

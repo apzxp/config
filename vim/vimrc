@@ -52,9 +52,9 @@ set wildmenu wildmode=longest,full
 map <C-e> :Vexplore<CR>
 imap <C-e> <C-O>:Vexplore<CR>
 
-vnoremap y "*y
-vnoremap d "*d
-vnoremap c "*c
+""vnoremap y "*y
+""vnoremap d "*d
+""vnoremap c "*c
 
 "----------------------------------------------------------------------------
 "Styling
